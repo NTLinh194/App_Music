@@ -35,8 +35,7 @@ const app = {
     isRandom: false,
     isRepeat: false,
     config: {},
-    // (1/2) Uncomment the line below to use localStorage
-    // config: JSON.parse(localStorage.getItem(PlAYER_STORAGE_KEY)) || {},
+
     songs: [
         {
             name: 'Lao tâm khổ tứ',
@@ -65,8 +64,6 @@ const app = {
     ],
     setConfig: function (key, value) {
         this.config[key] = value;
-        // (2/2) Uncomment the line below to use localStorage
-        // localStorage.setItem(PlAYER_STORAGE_KEY, JSON.stringify(this.config));
     },
     render: function () {
         const htmls = this.songs.map((song, index) => {
@@ -100,7 +97,6 @@ const app = {
         const cdWidth = cd.offsetWidth;
 
         // Xử lý CD quay / dừng
-        // Handle CD spins / stops
         const cdThumbAnimate = cdThumb.animate([{ transform: "rotate(360deg)" }], {
             duration: 10000, // 10 seconds
             iterations: Infinity
@@ -108,7 +104,6 @@ const app = {
         cdThumbAnimate.pause();
 
         // Xử lý phóng to / thu nhỏ CD
-        // Handles CD enlargement / reduction
         document.onscroll = function () {
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const newCdWidth = cdWidth - scrollTop;
@@ -118,7 +113,6 @@ const app = {
         };
 
         // Xử lý khi click play
-        // Handle when click play
         playBtn.onclick = function () {
             if (_this.isPlaying) {
                 audio.pause();
@@ -142,7 +136,6 @@ const app = {
         };
 
         // Khi tiến độ bài hát thay đổi
-        // When the song progress changes
         audio.ontimeupdate = function () {
             if (audio.duration) {
                 const progressPercent = Math.floor(
@@ -266,26 +259,21 @@ const app = {
     },
     start: function () {
         // Gán cấu hình từ config vào ứng dụng
-        // Assign configuration from config to application
         this.loadConfig();
 
         // Định nghĩa các thuộc tính cho object
-        // Defines properties for the object
         this.defineProperties();
 
         // Lắng nghe / xử lý các sự kiện (DOM events)
-        // Listening / handling events (DOM events)
         this.handleEvents();
 
         // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
-        // Load the first song information into the UI when running the app
         this.loadCurrentSong();
 
         // Render playlist
         this.render();
 
         // Hiển thị trạng thái ban đầu của button repeat & random
-        // Display the initial state of the repeat & random button
         randomBtn.classList.toggle("active", this.isRandom);
         repeatBtn.classList.toggle("active", this.isRepeat);
     }
