@@ -81,7 +81,7 @@ const app = {
             image: './assets/img/img7.jpg',
         },
         {
-            name: 'Như anh đã hứa',
+            name: 'Đáp án cuối cùng',
             singer: 'PhúcXP, Freak D',
             path: './assets/music/song8.mp3',
             image: './assets/img/img8.jpg',
