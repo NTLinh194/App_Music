@@ -1,7 +1,7 @@
 /*
-    1. Render songs-->ok
+    1. Render songs (quá trình tạo ra và hiển thị dữ liệu trực quan hoặc kết quả trên màn hình)
     2. Scroll to top-->ok
-    3. Play, Pause, Seek--> ok
+    3. Play, Pause, Seek (tua)--> ok
     4. CD rotate-->ok
     5. Next, Prev-->ok
     6. Random-->ok
@@ -30,7 +30,7 @@ const repeatBtn = $(".btn-repeat");
 const playlist = $(".playlist");
 
 const app = {
-    currentIndex: 0,
+    currentIndex: 0, // Phải lấy ra được song đầu tiên
     isPlaying: false,
     isRandom: false,
     isRepeat: false,
@@ -58,9 +58,33 @@ const app = {
         },
         {
             name: 'Ôm trọn nỗi nhớ',
-            singer: 'Thanh hưng',
+            singer: 'Rum',
             path: './assets/music/song4.mp3',
             image: './assets/img/img4.jpg',
+        },
+        {
+            name: 'Có ai hẹn hò cùng em chưa',
+            singer: 'Quân A.P',
+            path: './assets/music/song5.mp3',
+            image: './assets/img/img5.jpg',
+        },
+        {
+            name: 'Điều anh biết',
+            singer: 'Chi Dân',
+            path: './assets/music/song6.mp3',
+            image: './assets/img/img6.jpg',
+        },
+        {
+            name: 'Nếu ngày ấy',
+            singer: 'khởi My',
+            path: './assets/music/song7.mp3',
+            image: './assets/img/img7.jpg',
+        },
+        {
+            name: 'Như anh đã hứa',
+            singer: 'PhúcXP, Freak D',
+            path: './assets/music/song8.mp3',
+            image: './assets/img/img8.jpg',
         }
     ],
     setConfig: function (key, value) {
@@ -88,22 +112,22 @@ const app = {
         });
         playlist.innerHTML = htmls.join("");
     },
-    defineProperties: function () {
-        Object.defineProperty(this, "currentSong", {
-            get: function () {
+    defineProperties: function () { // hàm định nghĩa ra những thuộc tính
+        Object.defineProperty(this, "currentSong", { // this ở đây là chỉ đối tượng app
+            get: function () {  // Lấy ra song đầu tiên 
                 return this.songs[this.currentIndex];
             }
-        });
+        }); //Object.defineProperty(object, property, descriptor) 
     },
     handleEvents: function () {
         const _this = this;
-        const cdWidth = cd.offsetWidth;
+        const cdWidth = cd.offsetWidth;  // Lấy ra kích thước mặc định 
 
         // Xử lý CD quay / dừng
-        // Handle CD spins / stops
+        // Handle CD spins (quay vòng tròn một cách liên tục) / stops
         const cdThumbAnimate = cdThumb.animate([{ transform: "rotate(360deg)" }], {
             duration: 10000, // 10 seconds
-            iterations: Infinity
+            iterations: Infinity //  Số lần lặp lại hoạt ảnh, trong trường hợp này là vô hạn 
         });
         cdThumbAnimate.pause();
 
@@ -114,7 +138,7 @@ const app = {
             const newCdWidth = cdWidth - scrollTop;
 
             cd.style.width = newCdWidth > 0 ? newCdWidth + "px" : 0;
-            cd.style.opacity = newCdWidth / cdWidth;
+            // cd.style.opacity = newCdWidth / cdWidth;  // --> ra tỉ lệ
         };
 
         // Xử lý khi click play
