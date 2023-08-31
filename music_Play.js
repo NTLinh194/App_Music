@@ -90,7 +90,7 @@ const app = {
     setConfig: function (key, value) {
         this.config[key] = value;
         // (2/2) Uncomment the line below to use localStorage
-        // localStorage.setItem(PlAYER_STORAGE_KEY, JSON.stringify(this.config));
+        // localStorage.setItem(PlAYER_STORAGE_KEY, JSON.stringify(this.config)); 
     },
     render: function () {
         const htmls = this.songs.map((song, index) => {
@@ -125,7 +125,9 @@ const app = {
 
         // Xử lý CD quay / dừng
         // Handle CD spins (quay vòng tròn một cách liên tục) / stops
-        const cdThumbAnimate = cdThumb.animate([{ transform: "rotate(360deg)" }], {
+        const cdThumbAnimate = cdThumb.animate([
+            { transform: "rotate(360deg)" }
+        ], {
             duration: 10000, // 10 seconds
             iterations: Infinity //  Số lần lặp lại hoạt ảnh, trong trường hợp này là vô hạn 
         });
@@ -178,8 +180,9 @@ const app = {
 
         // Xử lý khi tua song
         progress.onchange = function (e) {
-            const seekTime = (audio.duration / 100) * e.target.value;  // (tổng t/g song / 100) * số phần trăm
+            const seekTime = (audio.duration / 100) * e.target.value;  // số giây = (tổng t/g song / 100) * số phần trăm
             audio.currentTime = seekTime;
+            // e.target là phần tử progress
         };
 
         // Khi next song
@@ -210,14 +213,14 @@ const app = {
         randomBtn.onclick = function (e) {
             _this.isRandom = !_this.isRandom;
             _this.setConfig("isRandom", _this.isRandom);
-            randomBtn.classList.toggle("active", _this.isRandom);
+            randomBtn.classList.toggle("active", _this.isRandom); //  được sử dụng để ẩn hoặc hiện phần tử HTML được chọn
         };
 
         // Xử lý lặp lại một song
         repeatBtn.onclick = function (e) {
             _this.isRepeat = !_this.isRepeat;
-            _this.setConfig("isRepeat", _this.isRepeat);
-            repeatBtn.classList.toggle("active", _this.isRepeat);
+            _this.setConfig("isRandom", _this.isRandom);
+            repeatBtn.classList.toggle("active", _this.isRepeat); //  được sử dụng để ẩn hoặc hiện phần tử HTML được chọn
         };
 
         // Xử lý next song khi audio ended
@@ -225,18 +228,18 @@ const app = {
             if (_this.isRepeat) {
                 audio.play();
             } else {
-                nextBtn.click();
+                nextBtn.click(); //nó sẽ hiểu là bấm click vào nút next 
             }
         };
 
         // Lắng nghe hành vi click vào playlist
         playlist.onclick = function (e) {
-            const songNode = e.target.closest(".song:not(.active)");
+            const songNode = e.target.closest(".song:not(.active)"); //element.closest(selectors) --> trả về element chính nó or thẻ cha, ông của nó nếu không tìm thấy sẽ trả về null.
 
             if (songNode || e.target.closest(".option")) {
                 // Xử lý khi click vào song
                 if (songNode) {
-                    _this.currentIndex = Number(songNode.dataset.index);
+                    _this.currentIndex = Number(songNode.dataset.index); // dataset.index = getAttribute('data-index') --> nếu đặt data-__ thì hay dùng dataset.
                     _this.loadCurrentSong();
                     _this.render();
                     audio.play();
@@ -310,8 +313,8 @@ const app = {
 
         // Hiển thị trạng thái ban đầu của button repeat & random
         // Display the initial state of the repeat & random button
-        randomBtn.classList.toggle("active", this.isRandom);
-        repeatBtn.classList.toggle("active", this.isRepeat);
+        // randomBtn.classList.toggle("active", this.isRandom);
+        // repeatBtn.classList.toggle("active", this.isRepeat);
     }
 };
 
